@@ -1,0 +1,144 @@
+{
+  "@context" : {
+    "BugType" : {
+      "@id" : "http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#BugType"
+    },
+    "Nickname" : {
+      "@id" : "http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#Nickname",
+      "@type" : "http://www.w3.org/2001/XMLSchema#string"
+    },
+    "PokemonType" : {
+      "@id" : "http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#PokemonType"
+    },
+    "WaterTypePokemon" : {
+      "@id" : "http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#WaterTypePokemon"
+    },
+    "ElectricType" : {
+      "@id" : "http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#ElectricType"
+    },
+    "Charmeleon" : {
+      "@id" : "http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#Charmeleon"
+    },
+    "Squirtle" : {
+      "@id" : "http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#Squirtle"
+    },
+    "Metapod" : {
+      "@id" : "http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#Metapod"
+    },
+    "Butterfree" : {
+      "@id" : "http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#Butterfree"
+    },
+    "isRuleEnabled" : {
+      "@id" : "http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled"
+    },
+    "Wartortle" : {
+      "@id" : "http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#Wartortle"
+    },
+    "Geodude" : {
+      "@id" : "http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#Geodude"
+    },
+    "WaterType" : {
+      "@id" : "http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#WaterType"
+    },
+    "ElectricTypePokemon" : {
+      "@id" : "http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#ElectricTypePokemon"
+    },
+    "label" : {
+      "@id" : "http://www.w3.org/2000/01/rdf-schema#label"
+    },
+    "Graveler" : {
+      "@id" : "http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#Graveler"
+    },
+    "Ivysaur" : {
+      "@id" : "http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#Ivysaur"
+    },
+    "Golem" : {
+      "@id" : "http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#Golem"
+    },
+    "hasType" : {
+      "@id" : "http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#hasType",
+      "@type" : "@id"
+    },
+    "pokemonStrongAgainst" : {
+      "@id" : "http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#pokemonStrongAgainst",
+      "@type" : "@id"
+    },
+    "KnownPokemon" : {
+      "@id" : "http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#KnownPokemon"
+    },
+    "Bulbasaur" : {
+      "@id" : "http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#Bulbasaur"
+    },
+    "Charizard" : {
+      "@id" : "http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#Charizard"
+    },
+    "strongAgainst" : {
+      "@id" : "http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#strongAgainst",
+      "@type" : "@id"
+    },
+    "GrassTypePokemon" : {
+      "@id" : "http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#GrassTypePokemon"
+    },
+    "GrassType" : {
+      "@id" : "http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#GrassType"
+    },
+    "Raichu" : {
+      "@id" : "http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#Raichu"
+    },
+    "FireTypePokemon" : {
+      "@id" : "http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#FireTypePokemon"
+    },
+    "Owner" : {
+      "@id" : "http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#Owner",
+      "@type" : "http://www.w3.org/2001/XMLSchema#string"
+    },
+    "Caterpie" : {
+      "@id" : "http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#Caterpie"
+    },
+    "pokemonWeakAgainst" : {
+      "@id" : "http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#pokemonWeakAgainst",
+      "@type" : "@id"
+    },
+    "weakAgainst" : {
+      "@id" : "http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#weakAgainst",
+      "@type" : "@id"
+    },
+    "Pokemon" : {
+      "@id" : "http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#Pokemon"
+    },
+    "RockType" : {
+      "@id" : "http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#RockType"
+    },
+    "sameAs" : {
+      "@id" : "http://www.w3.org/2000/01/rdf-schema#sameAs"
+    },
+    "comment" : {
+      "@id" : "http://www.w3.org/2000/01/rdf-schema#comment"
+    },
+    "Venusaur" : {
+      "@id" : "http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#Venusaur"
+    },
+    "Charmander" : {
+      "@id" : "http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#Charmander"
+    },
+    "FireType" : {
+      "@id" : "http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#FireType"
+    },
+    "RockTypePokemon" : {
+      "@id" : "http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#RockTypePokemon"
+    },
+    "evolvesInto" : {
+      "@id" : "http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#evolvesInto",
+      "@type" : "@id"
+    },
+    "Pikachu" : {
+      "@id" : "http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#Pikachu"
+    },
+    "BugTypePokemon" : {
+      "@id" : "http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#BugTypePokemon"
+    },
+    "Blastoise" : {
+      "@id" : "http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#Blastoise"
+    }
+  }
+}
