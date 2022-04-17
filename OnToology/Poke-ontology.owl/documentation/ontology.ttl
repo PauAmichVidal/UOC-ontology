@@ -1,0 +1,745 @@
+@prefix : <http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#> .
+
+<http://www.semanticweb.org/pau/ontologies/2022/poke-ontology> rdf:type owl:Ontology ;
+                                                                rdfs:comment """Name: Poké-onthology
+Author: Pau Amich Vidal
+Description: This ontology describes various pokémon based on thier types and movesets.""" .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled
+<http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled> rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2000/01/rdf-schema#comment
+rdfs:comment rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2000/01/rdf-schema#sameAs
+rdfs:sameAs rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Datatypes
+#################################################################
+
+###  http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral
+rdf:PlainLiteral rdf:type rdfs:Datatype .
+
+
+###  http://www.w3.org/2001/XMLSchema#integer
+xsd:integer rdf:type rdfs:Datatype .
+
+
+###  http://www.w3.org/2001/XMLSchema#positiveInteger
+xsd:positiveInteger rdf:type rdfs:Datatype .
+
+
+###  http://www.w3.org/2001/XMLSchema#string
+xsd:string rdf:type rdfs:Datatype .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#evolvesInto
+:evolvesInto rdf:type owl:ObjectProperty ,
+                      owl:TransitiveProperty ;
+             rdfs:domain :Pokemon ;
+             rdfs:range :Pokemon ;
+             rdfs:comment "Relates a Pokémon to its evolved form." .
+
+
+###  http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#hasType
+:hasType rdf:type owl:ObjectProperty ,
+                  owl:FunctionalProperty ;
+         rdfs:domain :Pokemon ;
+         rdfs:range :PokemonType ;
+         rdfs:comment "Gives a type to a pokémon." .
+
+
+###  http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#pokemonStrongAgainst
+:pokemonStrongAgainst rdf:type owl:ObjectProperty ,
+                               owl:AsymmetricProperty ;
+                      rdfs:domain :Pokemon ;
+                      rdfs:range :PokemonType ;
+                      rdfs:comment "Shows what types a pokémon is strong against." .
+
+
+###  http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#pokemonWeakAgainst
+:pokemonWeakAgainst rdf:type owl:ObjectProperty ,
+                             owl:AsymmetricProperty ;
+                    rdfs:domain :Pokemon ;
+                    rdfs:range :PokemonType ;
+                    rdfs:comment "Shows what types a pokémon is weak against." .
+
+
+###  http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#strongAgainst
+:strongAgainst rdf:type owl:ObjectProperty ;
+               owl:inverseOf :weakAgainst ;
+               rdf:type owl:AsymmetricProperty ;
+               rdfs:domain :PokemonType ;
+               rdfs:range :PokemonType ;
+               rdfs:comment "Shows what types a type is strong against." .
+
+
+###  http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#weakAgainst
+:weakAgainst rdf:type owl:ObjectProperty ,
+                      owl:AsymmetricProperty ;
+             rdfs:domain :PokemonType ;
+             rdfs:range :PokemonType ;
+             rdfs:comment "Shows what types a type is weak against." .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#Nickname
+:Nickname rdf:type owl:DatatypeProperty ;
+          rdfs:domain :Pokemon ;
+          rdfs:range xsd:string ;
+          rdfs:comment "Nickname given to the Pokémon, if any." .
+
+
+###  http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#Owner
+:Owner rdf:type owl:DatatypeProperty ;
+       rdfs:domain :Pokemon ;
+       rdfs:range xsd:string ;
+       rdfs:comment "Name of the pokémon owner, if it has any." .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#Blastoise
+:Blastoise rdf:type owl:Class ;
+           rdfs:subClassOf :KnownPokemon ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :hasType ;
+                             owl:allValuesFrom :WaterType
+                           ] ;
+           rdfs:comment "Blastoise is a strong water-typed pokémon." .
+
+
+###  http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#BugType
+:BugType rdf:type owl:Class ;
+         rdfs:subClassOf :PokemonType ;
+         rdfs:comment "The bug type is weak against the fire and rock types, but strong against the grass type." .
+
+
+###  http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#BugTypePokemon
+:BugTypePokemon rdf:type owl:Class ;
+                owl:equivalentClass [ owl:intersectionOf ( :Pokemon
+                                                           [ rdf:type owl:Restriction ;
+                                                             owl:onProperty :hasType ;
+                                                             owl:allValuesFrom :BugType
+                                                           ]
+                                                         ) ;
+                                      rdf:type owl:Class
+                                    ] ;
+                rdfs:comment "Subset of Pokémon with the Bug type." .
+
+
+###  http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#Bulbasaur
+:Bulbasaur rdf:type owl:Class ;
+           rdfs:subClassOf :KnownPokemon ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :evolvesInto ;
+                             owl:allValuesFrom :Ivysaur
+                           ] ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :hasType ;
+                             owl:allValuesFrom :GrassType
+                           ] ;
+           rdfs:comment "Bulbasaur is a weak grass-typed pokémon." ;
+           rdfs:sameAs "https://dbpedia.org/page/Bulbasaur"^^xsd:anyURI .
+
+
+###  http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#Butterfree
+:Butterfree rdf:type owl:Class ;
+            rdfs:subClassOf :KnownPokemon ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :hasType ;
+                              owl:allValuesFrom :BugType
+                            ] ;
+            rdfs:comment "Butterfree is a strong bug-typed pokémon." .
+
+
+###  http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#Caterpie
+:Caterpie rdf:type owl:Class ;
+          rdfs:subClassOf :KnownPokemon ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty :evolvesInto ;
+                            owl:allValuesFrom :Metapod
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty :hasType ;
+                            owl:allValuesFrom :BugType
+                          ] ;
+          rdfs:comment "Caterpie is a weak bug-typed pokémon." .
+
+
+###  http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#Charizard
+:Charizard rdf:type owl:Class ;
+           rdfs:subClassOf :KnownPokemon ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :hasType ;
+                             owl:allValuesFrom :FireType
+                           ] ;
+           rdfs:comment "Charizard is a strong fire-type pokémon." .
+
+
+###  http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#Charmander
+:Charmander rdf:type owl:Class ;
+            rdfs:subClassOf :KnownPokemon ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :evolvesInto ;
+                              owl:allValuesFrom :Charmeleon
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :hasType ;
+                              owl:allValuesFrom :FireType
+                            ] ;
+            rdfs:comment "Charmander is a weak fire-type pokémon." ;
+            rdfs:sameAs "https://dbpedia.org/page/Charmander"^^xsd:anyURI .
+
+
+###  http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#Charmeleon
+:Charmeleon rdf:type owl:Class ;
+            rdfs:subClassOf :KnownPokemon ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :evolvesInto ;
+                              owl:allValuesFrom :Charizard
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :hasType ;
+                              owl:allValuesFrom :FireType
+                            ] ;
+            rdfs:comment "Charmeleon is an average fire-typed pokémon." .
+
+
+###  http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#ElectricType
+:ElectricType rdf:type owl:Class ;
+              rdfs:subClassOf :PokemonType ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty :strongAgainst ;
+                                owl:allValuesFrom :WaterType
+                              ] ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty :weakAgainst ;
+                                owl:allValuesFrom :RockType
+                              ] ;
+              rdfs:comment "The electric type is weak against the rock type, but strong against the water type." .
+
+
+###  http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#ElectricTypePokemon
+:ElectricTypePokemon rdf:type owl:Class ;
+                     owl:equivalentClass [ owl:intersectionOf ( :Pokemon
+                                                                [ rdf:type owl:Restriction ;
+                                                                  owl:onProperty :hasType ;
+                                                                  owl:allValuesFrom :ElectricType
+                                                                ]
+                                                              ) ;
+                                           rdf:type owl:Class
+                                         ] ;
+                     rdfs:comment "Subset of Pokémon with the Electric type." .
+
+
+###  http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#FireType
+:FireType rdf:type owl:Class ;
+          rdfs:subClassOf :PokemonType ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty :strongAgainst ;
+                            owl:allValuesFrom [ rdf:type owl:Class ;
+                                                owl:unionOf ( :BugType
+                                                              :GrassType
+                                                            )
+                                              ]
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty :weakAgainst ;
+                            owl:allValuesFrom [ rdf:type owl:Class ;
+                                                owl:unionOf ( :RockType
+                                                              :WaterType
+                                                            )
+                                              ]
+                          ] ;
+          rdfs:comment "The fire type is weak against the water and rock types, but strong against the grass and bug types." .
+
+
+###  http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#FireTypePokemon
+:FireTypePokemon rdf:type owl:Class ;
+                 owl:equivalentClass [ owl:intersectionOf ( :Pokemon
+                                                            [ rdf:type owl:Restriction ;
+                                                              owl:onProperty :hasType ;
+                                                              owl:allValuesFrom :FireType
+                                                            ]
+                                                          ) ;
+                                       rdf:type owl:Class
+                                     ] ;
+                 rdfs:comment "Subset of Pokémon with the fire type." .
+
+
+###  http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#Geodude
+:Geodude rdf:type owl:Class ;
+         rdfs:subClassOf :KnownPokemon ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty :evolvesInto ;
+                           owl:allValuesFrom :Graveler
+                         ] ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty :hasType ;
+                           owl:allValuesFrom :RockType
+                         ] ;
+         rdfs:comment "Geodude is a weak rock-typed pokémon." .
+
+
+###  http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#Golem
+:Golem rdf:type owl:Class ;
+       rdfs:subClassOf :KnownPokemon ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty :hasType ;
+                         owl:allValuesFrom :RockType
+                       ] ;
+       rdfs:comment "Golem is a strong rock-typed pokémon." .
+
+
+###  http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#GrassType
+:GrassType rdf:type owl:Class ;
+           rdfs:subClassOf :PokemonType ;
+           rdfs:comment "The grass type is weak against the fire and bug types, but strong against the water and rock types." .
+
+
+###  http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#GrassTypePokemon
+:GrassTypePokemon rdf:type owl:Class ;
+                  owl:equivalentClass [ owl:intersectionOf ( :Pokemon
+                                                             [ rdf:type owl:Restriction ;
+                                                               owl:onProperty :hasType ;
+                                                               owl:allValuesFrom :GrassType
+                                                             ]
+                                                           ) ;
+                                        rdf:type owl:Class
+                                      ] ;
+                  rdfs:comment "Subset of Pokémon with the Grass type." .
+
+
+###  http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#Graveler
+:Graveler rdf:type owl:Class ;
+          rdfs:subClassOf :KnownPokemon ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty :evolvesInto ;
+                            owl:allValuesFrom :Golem
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty :hasType ;
+                            owl:allValuesFrom :RockType
+                          ] ;
+          rdfs:comment "Graveler is an average rock-typed pokémon." .
+
+
+###  http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#Ivysaur
+:Ivysaur rdf:type owl:Class ;
+         rdfs:subClassOf :KnownPokemon ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty :evolvesInto ;
+                           owl:allValuesFrom :Venusaur
+                         ] ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty :hasType ;
+                           owl:allValuesFrom :GrassType
+                         ] ;
+         rdfs:comment "Ivysaur is an average grass-typed pokémon." .
+
+
+###  http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#KnownPokemon
+:KnownPokemon rdf:type owl:Class ;
+              rdfs:subClassOf :Pokemon ;
+              rdfs:comment "List of known pokémon." .
+
+
+###  http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#Metapod
+:Metapod rdf:type owl:Class ;
+         rdfs:subClassOf :KnownPokemon ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty :evolvesInto ;
+                           owl:allValuesFrom :Butterfree
+                         ] ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty :hasType ;
+                           owl:allValuesFrom :BugType
+                         ] ;
+         rdfs:comment "Metapod is an average bug-type pokémon." .
+
+
+###  http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#Pikachu
+:Pikachu rdf:type owl:Class ;
+         rdfs:subClassOf :KnownPokemon ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty :evolvesInto ;
+                           owl:allValuesFrom :Raichu
+                         ] ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty :hasType ;
+                           owl:allValuesFrom :ElectricType
+                         ] ;
+         owl:disjointWith :Raichu ;
+         rdfs:comment "Pikachu is a weak electric-typed pokémon." ;
+         rdfs:sameAs "https://dbpedia.org/page/Pikachu"^^xsd:anyURI .
+
+
+###  http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#Pokemon
+:Pokemon rdf:type owl:Class ;
+         rdfs:comment "Defines a pokémon." .
+
+
+###  http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#PokemonType
+:PokemonType rdf:type owl:Class ;
+             rdfs:comment "Defines the pokemon types and how they're related between them." .
+
+
+###  http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#Raichu
+:Raichu rdf:type owl:Class ;
+        rdfs:subClassOf :KnownPokemon ,
+                        [ rdf:type owl:Restriction ;
+                          owl:onProperty :hasType ;
+                          owl:allValuesFrom :ElectricType
+                        ] ;
+        rdfs:comment "Raichu is a strong electric-typed pokémon." .
+
+
+###  http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#RockType
+:RockType rdf:type owl:Class ;
+          rdfs:subClassOf :PokemonType ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty :strongAgainst ;
+                            owl:allValuesFrom [ rdf:type owl:Class ;
+                                                owl:unionOf ( :ElectricType
+                                                              :FireType
+                                                            )
+                                              ]
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty :weakAgainst ;
+                            owl:allValuesFrom [ rdf:type owl:Class ;
+                                                owl:unionOf ( :GrassType
+                                                              :WaterType
+                                                            )
+                                              ]
+                          ] ;
+          rdfs:comment "The rock type is weak against the water and grass types, but strong against the fire and bug types." .
+
+
+###  http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#RockTypePokemon
+:RockTypePokemon rdf:type owl:Class ;
+                 owl:equivalentClass [ owl:intersectionOf ( :Pokemon
+                                                            [ rdf:type owl:Restriction ;
+                                                              owl:onProperty :hasType ;
+                                                              owl:allValuesFrom :RockType
+                                                            ]
+                                                          ) ;
+                                       rdf:type owl:Class
+                                     ] ;
+                 rdfs:comment "Subset of Pokémon with the rock type." .
+
+
+###  http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#Squirtle
+:Squirtle rdf:type owl:Class ;
+          rdfs:subClassOf :KnownPokemon ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty :evolvesInto ;
+                            owl:allValuesFrom :Wartortle
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty :hasType ;
+                            owl:allValuesFrom :WaterType
+                          ] ;
+          rdfs:comment "Squirtle is a weak water-typed pokémon." .
+
+
+###  http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#Venusaur
+:Venusaur rdf:type owl:Class ;
+          rdfs:subClassOf :KnownPokemon ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty :hasType ;
+                            owl:allValuesFrom :GrassType
+                          ] ;
+          rdfs:comment "Venusaur is a strong grass-type pokémon." .
+
+
+###  http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#Wartortle
+:Wartortle rdf:type owl:Class ;
+           rdfs:subClassOf :KnownPokemon ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :evolvesInto ;
+                             owl:allValuesFrom :Blastoise
+                           ] ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :hasType ;
+                             owl:allValuesFrom :WaterType
+                           ] ;
+           rdfs:comment "Wartortle is an average water-typed pokémon." .
+
+
+###  http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#WaterType
+:WaterType rdf:type owl:Class ;
+           rdfs:subClassOf :PokemonType ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :strongAgainst ;
+                             owl:allValuesFrom [ rdf:type owl:Class ;
+                                                 owl:unionOf ( :FireType
+                                                               :RockType
+                                                             )
+                                               ]
+                           ] ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :weakAgainst ;
+                             owl:allValuesFrom [ rdf:type owl:Class ;
+                                                 owl:unionOf ( :ElectricType
+                                                               :GrassType
+                                                             )
+                                               ]
+                           ] ;
+           rdfs:comment "The water type is weak against the grass and electric types, but strong against the fire and rock types." .
+
+
+###  http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#WaterTypePokemon
+:WaterTypePokemon rdf:type owl:Class ;
+                  owl:equivalentClass [ owl:intersectionOf ( :Pokemon
+                                                             [ rdf:type owl:Restriction ;
+                                                               owl:onProperty :hasType ;
+                                                               owl:allValuesFrom :WaterType
+                                                             ]
+                                                           ) ;
+                                        rdf:type owl:Class
+                                      ] ;
+                  rdfs:comment "Subset of Pokémon with the Water type." .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#Charmander1
+:Charmander1 rdf:type owl:NamedIndividual ,
+                      :Charmander ;
+             rdfs:comment "A wild Charmander" .
+
+
+###  http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#Charmander2
+:Charmander2 rdf:type owl:NamedIndividual ,
+                      :Charmander ;
+             :Nickname "Charlie" ;
+             :Owner "Ash" ;
+             rdfs:comment "A trainer's Charmander" .
+
+
+###  http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#Geodude1
+:Geodude1 rdf:type owl:NamedIndividual ,
+                   :Geodude ;
+          :Owner "Brock" ;
+          rdfs:comment "A trainer's Golem" .
+
+
+###  http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#Ivysaur1
+:Ivysaur1 rdf:type owl:NamedIndividual ,
+                   :Ivysaur ;
+          :Owner "Ash" ;
+          rdfs:comment "A trainer's Ivysaur." .
+
+
+###  http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#Pikachu1
+:Pikachu1 rdf:type owl:NamedIndividual ,
+                   :Pikachu ;
+          :Owner "Ash" ;
+          rdfs:comment "A trainer's pikachu." .
+
+
+###  http://www.semanticweb.org/pau/ontologies/2022/poke-ontology#Venusaur1
+:Venusaur1 rdf:type owl:NamedIndividual ,
+                    :Venusaur ;
+           rdfs:comment "A wild Venusaur." .
+
+
+#################################################################
+#    General axioms
+#################################################################
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :Blastoise
+                :Squirtle
+                :Wartortle
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :BugType
+                :ElectricType
+                :FireType
+                :GrassType
+                :RockType
+                :WaterType
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :BugTypePokemon
+                :ElectricTypePokemon
+                :FireTypePokemon
+                :GrassTypePokemon
+                :RockTypePokemon
+                :WaterTypePokemon
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :Bulbasaur
+                :Ivysaur
+                :Venusaur
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :Butterfree
+                :Caterpie
+                :Metapod
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :Charizard
+                :Charmander
+                :Charmeleon
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :Geodude
+                :Golem
+                :Graveler
+              )
+] .
+
+
+[ rdf:type owl:AllDifferent ;
+  owl:distinctMembers ( :Charmander1
+                        :Charmander2
+                      )
+] .
+
+
+#################################################################
+#    Rules
+#################################################################
+
+<http://www.semanticweb.org/pau/ontologies/2022/3/untitled-ontology-5#t> rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+<http://www.semanticweb.org/pau/ontologies/2022/3/untitled-ontology-5#pt> rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+<http://www.semanticweb.org/pau/ontologies/2022/3/untitled-ontology-5#p> rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+<http://www.semanticweb.org/pau/ontologies/2022/3/untitled-ontology-5#t2> rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+<http://www.semanticweb.org/pau/ontologies/2022/3/untitled-ontology-5#pt2> rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+<http://www.semanticweb.org/pau/ontologies/2022/3/untitled-ontology-5#p2> rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+[ <http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled> "true"^^xsd:boolean ;
+   rdfs:comment "Rule used to check if a pokémon is weak against a type" ;
+   rdfs:label "S1" ;
+   rdf:type <http://www.w3.org/2003/11/swrl#Imp> ;
+   <http://www.w3.org/2003/11/swrl#body> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#classPredicate> :PokemonType ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> <http://www.semanticweb.org/pau/ontologies/2022/3/untitled-ontology-5#t>
+                                                     ] ;
+                                           rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                      rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                  <http://www.w3.org/2003/11/swrl#propertyPredicate> :weakAgainst ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument1> <http://www.semanticweb.org/pau/ontologies/2022/3/untitled-ontology-5#pt> ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument2> <http://www.semanticweb.org/pau/ontologies/2022/3/untitled-ontology-5#t>
+                                                                ] ;
+                                                      rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                 rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                             <http://www.w3.org/2003/11/swrl#propertyPredicate> :hasType ;
+                                                                             <http://www.w3.org/2003/11/swrl#argument1> <http://www.semanticweb.org/pau/ontologies/2022/3/untitled-ontology-5#p> ;
+                                                                             <http://www.w3.org/2003/11/swrl#argument2> <http://www.semanticweb.org/pau/ontologies/2022/3/untitled-ontology-5#pt>
+                                                                           ] ;
+                                                                 rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                            rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                                                        <http://www.w3.org/2003/11/swrl#classPredicate> :Pokemon ;
+                                                                                        <http://www.w3.org/2003/11/swrl#argument1> <http://www.semanticweb.org/pau/ontologies/2022/3/untitled-ontology-5#p>
+                                                                                      ] ;
+                                                                            rdf:rest rdf:nil
+                                                                          ]
+                                                               ]
+                                                    ]
+                                         ] ;
+   <http://www.w3.org/2003/11/swrl#head> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#propertyPredicate> :pokemonWeakAgainst ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> <http://www.semanticweb.org/pau/ontologies/2022/3/untitled-ontology-5#p> ;
+                                                       <http://www.w3.org/2003/11/swrl#argument2> <http://www.semanticweb.org/pau/ontologies/2022/3/untitled-ontology-5#t>
+                                                     ] ;
+                                           rdf:rest rdf:nil
+                                         ]
+ ] .
+
+[ <http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled> "true"^^xsd:boolean ;
+   rdfs:comment "Rule used to check if a pokémon is strong against a type" ;
+   rdfs:label "S2" ;
+   rdf:type <http://www.w3.org/2003/11/swrl#Imp> ;
+   <http://www.w3.org/2003/11/swrl#body> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#classPredicate> :PokemonType ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> <http://www.semanticweb.org/pau/ontologies/2022/3/untitled-ontology-5#t2>
+                                                     ] ;
+                                           rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                      rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                  <http://www.w3.org/2003/11/swrl#propertyPredicate> :strongAgainst ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument1> <http://www.semanticweb.org/pau/ontologies/2022/3/untitled-ontology-5#pt2> ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument2> <http://www.semanticweb.org/pau/ontologies/2022/3/untitled-ontology-5#t2>
+                                                                ] ;
+                                                      rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                 rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                             <http://www.w3.org/2003/11/swrl#propertyPredicate> :hasType ;
+                                                                             <http://www.w3.org/2003/11/swrl#argument1> <http://www.semanticweb.org/pau/ontologies/2022/3/untitled-ontology-5#p2> ;
+                                                                             <http://www.w3.org/2003/11/swrl#argument2> <http://www.semanticweb.org/pau/ontologies/2022/3/untitled-ontology-5#pt2>
+                                                                           ] ;
+                                                                 rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                            rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                                                        <http://www.w3.org/2003/11/swrl#classPredicate> :Pokemon ;
+                                                                                        <http://www.w3.org/2003/11/swrl#argument1> <http://www.semanticweb.org/pau/ontologies/2022/3/untitled-ontology-5#p2>
+                                                                                      ] ;
+                                                                            rdf:rest rdf:nil
+                                                                          ]
+                                                               ]
+                                                    ]
+                                         ] ;
+   <http://www.w3.org/2003/11/swrl#head> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#propertyPredicate> :pokemonStrongAgainst ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> <http://www.semanticweb.org/pau/ontologies/2022/3/untitled-ontology-5#p2> ;
+                                                       <http://www.w3.org/2003/11/swrl#argument2> <http://www.semanticweb.org/pau/ontologies/2022/3/untitled-ontology-5#t2>
+                                                     ] ;
+                                           rdf:rest rdf:nil
+                                         ]
+ ] .
+
+###  Generated by the OWL API (version 5.1.18) https://github.com/owlcs/owlapi/
